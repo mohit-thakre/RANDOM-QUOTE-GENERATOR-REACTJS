@@ -11,7 +11,6 @@ const App = () => {
   useEffect(() => {
     //
     fetchquote();
-    console.log("app");
     //
   }, []);
   return (

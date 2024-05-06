@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { Appcontext } from "../context/context1";
 import { AiOutlineSound } from "react-icons/ai";
 import { FaRegCopy } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { FaQuoteRight } from "react-icons/fa6";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
@@ -11,7 +10,7 @@ import { IoArrowForwardCircleOutline } from "react-icons/io5";
 
 const Quote = () => {
   const {
-    fetchquote,
+    
     handlesound,
     quoteContent,
     quoteAuthor,
@@ -19,12 +18,19 @@ const Quote = () => {
     handleleft,
     handletag,
     loading,
+    handlecopy,
+    handlewquote,
+    quotecontent,
+    author,
+    tag
+    
   } = useContext(Appcontext);
 
+  const israndom = !tag;
   return (
-    <div className=" w-full h-screen bg-[#1c2841] grid place-items-center">
-      <div className=" w-[500px] h-[350px] rounded-md bg-white p-4">
-        <h2 className=" text-3xl font-extrabold text-center border-b-4 pb-2 mx-10  px-5 py-1 bg-black rounded-full text-white flex justify-evenly items-center">
+    <div className=" w-full h-screen bg-[#1c2841] grid place-items-center ">
+      <div className=" w-[90%] h-auto rounded-md bg-white mx-2 p-4 sm:w-[500px] ">
+        <h2 className=" text-xl font-extrabold text-center border-b-4 pb-2 mx-10  px-5 py-1 bg-black rounded-full text-white flex justify-evenly items-center sm:text-3xl">
           <FaQuoteLeft />
           <span className="text-[#33FF00] ">Quote</span> of the day
           <FaQuoteRight />
@@ -34,21 +40,27 @@ const Quote = () => {
         ) : (
           <div>
             <p className=" text-lg font-medium py-4 text-center">
-              {quoteContent}
+              "{quoteContent || quotecontent}"
             </p>
-            <p className="text-right font-medium ">--{quoteAuthor}</p>
+            <p className="text-right font-medium "> — {quoteAuthor || author}</p>
           </div>
         )}
         <div className="flex justify-center items-center gap-32">
-          <button onClick={() => handleleft()} className=" text-3xl font-light">
+          {
+            !israndom &&<button onClick={() => handleleft()} className=" text-3xl font-light">
             <IoArrowBackCircleOutline />
           </button>
-          <button
+          }
+          {
+            !israndom&&  <button
             onClick={() => handleright()}
             className=" text-3xl font-light"
           >
             <IoArrowForwardCircleOutline />
           </button>
+          }
+          
+        
         </div>
         <div className=" w-[90%] h-[2px] bg-gray-400 mx-auto mt-4"></div>
         <div className="flex justify-between items-center m-3">
@@ -62,6 +74,7 @@ const Quote = () => {
               id="tag"
               onChange={(e) => handletag(e.target.value)}
             >
+             
               <option value="life">Life</option>
               <option value="technology">Technology</option>
               <option value="happiness">Happiness</option>
@@ -87,7 +100,7 @@ const Quote = () => {
           <div>
             <button
               className=" px-4 py-2 bg-[#1c2841] text-white font-bold border-gray-400 rounded-full"
-              onClick={() => fetchquote()}
+              onClick={() => handlewquote()}
             >
               New Quote
             </button>
@@ -95,17 +108,18 @@ const Quote = () => {
         </div>
         <div className="flex justify-center items-center gap-4">
           <span
-            className="p-3 rounded-full border-2 border-gray-400 text-blue-900 font-extrabold"
+            className="p-3 rounded-full border-2 border-gray-400 text-blue-900 font-extrabold cursor-pointer hover:bg-blue-700 hover:text-white duration-300"
             onClick={() => handlesound()}
           >
             <AiOutlineSound />
           </span>
-          <span className="p-3 rounded-full border-2 border-gray-400 text-blue-900 font-extrabold">
+          <span
+            className="p-3 rounded-full border-2 border-gray-400 text-blue-900 font-extrabold cursor-pointer hover:bg-blue-700 hover:text-white duration-300"
+            onClick={() => handlecopy(quoteContent || quotecontent)}
+          >
             <FaRegCopy />
           </span>
-          <span className="p-3 rounded-full border-2 border-gray-400 text-blue-900 font-extrabold">
-            <FaXTwitter />
-          </span>
+         
         </div>
       </div>
     </div>
